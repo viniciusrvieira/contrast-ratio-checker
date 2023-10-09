@@ -1,6 +1,6 @@
 {
     "name": "contrast-ratio-checker",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "description": "A package based on WCAG 2.0 to easily check contrast ratio.",
     "scripts": {
         "example": "ts-node examples/index.ts"
