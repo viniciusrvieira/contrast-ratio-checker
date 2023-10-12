@@ -126,13 +126,13 @@ const rgb2 = { red: 120, green: 0, blue: 122 }
 
 // ratio ~6.23
 
-crc.getRatioValidationByHex(rgb1, rgb2) // result: { WCAG_AA: true, WCAG_AAA: false }
+crc.getRatioValidationByRgb(rgb1, rgb2) // result: { WCAG_AA: true, WCAG_AAA: false }
 
-crc.getRatioValidationByHex(rgb1, rgb2, { fontSizePx: 19, bold: true }) // result: { WCAG_AA: true, WCAG_AAA: true }
+crc.getRatioValidationByRgb(rgb1, rgb2, { fontSizePx: 19, bold: true }) // result: { WCAG_AA: true, WCAG_AAA: true }
 
 // using custom ratios:
 
-crc.getRatioValidationByHex(rgb1, rgb2, {
+crc.getRatioValidationByRgb(rgb1, rgb2, {
     fontSizePx: 19,
     bold: true,
     custom: 6,
