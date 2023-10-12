@@ -3,7 +3,8 @@
     "version": "1.0.0",
     "description": "A package based on WCAG 2.0 to easily check contrast ratio.",
     "scripts": {
-        "example": "ts-node examples/index.ts"
+        "example1": "ts-node examples/example1.ts",
+        "example2": "ts-node examples/example2.ts"
     },
     "repository": {
         "type": "git",

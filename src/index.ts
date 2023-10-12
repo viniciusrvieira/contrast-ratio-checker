@@ -1,7 +1,16 @@
-import { IRgb } from "./types"
+import {
+    IWcagValidation,
+    IRgb,
+    ICustomValidation,
+    IValidationOptions,
+} from "./types"
 
 export class ContrastRatioChecker {
-    constructor() {}
+    private PX_TO_PT_RATIO
+
+    constructor() {
+        this.PX_TO_PT_RATIO = 3 / 4
+    }
 
     private isValidHex(hex: string): Boolean {
         try {
@@ -138,6 +147,116 @@ export class ContrastRatioChecker {
             return this.getContrastRatioByRgb(rgb1, rgb2)
         } catch (err) {
             throw Error(`getContrastRatioByHex failed. ${err}`)
+        }
+    }
+
+    /* Validations Methods */
+
+    private getWcagLargeTextValidation(fontSizePx: number, bold: Boolean) {
+        try {
+            const fontSizePt = fontSizePx * this.PX_TO_PT_RATIO
+
+            if (fontSizePt >= 18 || (fontSizePt >= 14 && bold)) {
+                return true
+            } else {
+                return false
+            }
+        } catch (err) {
+            throw Error(`getWcagLargeTextValidation failed. ${err}`)
+        }
+    }
+
+    private getCustomRatioValidation(
+        ratio: number,
+        custom: number | null = null
+    ): Object | ICustomValidation {
+        try {
+            const validation = custom
+                ? { CUSTOM: ratio >= custom ? true : false }
+                : {}
+
+            return validation
+        } catch (err) {
+            throw Error(`getCustomRatioValidation failed. ${err}`)
+        }
+    }
+
+    getWcagRatioValidation(
+        ratio: number,
+        fontSizePx = 16,
+        bold: Boolean = false
+    ): IWcagValidation {
+        // Uses WCAG 2.0
+        try {
+            const largeText = this.getWcagLargeTextValidation(fontSizePx, bold)
+
+            const aaRatio = largeText ? 3 : 4.5
+            const aaaRatio = largeText ? 4.5 : 7
+
+            return {
+                WCAG_AA: ratio >= aaRatio ? true : false,
+                WCAG_AAA: ratio >= aaaRatio ? true : false,
+            }
+        } catch (err) {
+            throw Error(`getWcagRatioValidation failed. ${err}`)
+        }
+    }
+
+    getRatioValidationByRgb(
+        rgb1: IRgb,
+        rgb2: IRgb,
+        options: IValidationOptions | null = null
+    ): IWcagValidation {
+        try {
+            const ratio = this.getContrastRatioByRgb(rgb1, rgb2)
+
+            const { WCAG_AA, WCAG_AAA } = this.getWcagRatioValidation(
+                ratio,
+                options?.fontSizePx,
+                options?.bold
+            )
+
+            const customValidation = this.getCustomRatioValidation(
+                ratio,
+                options?.custom
+            )
+
+            return {
+                WCAG_AA,
+                WCAG_AAA,
+                ...customValidation,
+            }
+        } catch (err) {
+            throw Error(`getRatioValidationByRgb failed. ${err}`)
+        }
+    }
+
+    getRatioValidationByHex(
+        hex1: string,
+        hex2: string,
+        options: IValidationOptions | null = null
+    ): IWcagValidation {
+        try {
+            const ratio = this.getContrastRatioByHex(hex1, hex2)
+
+            const { WCAG_AA, WCAG_AAA } = this.getWcagRatioValidation(
+                ratio,
+                options?.fontSizePx,
+                options?.bold
+            )
+
+            const customValidation = this.getCustomRatioValidation(
+                ratio,
+                options?.custom
+            )
+
+            return {
+                WCAG_AA,
+                WCAG_AAA,
+                ...customValidation,
+            }
+        } catch (err) {
+            throw Error(`getRatioValidationByHex failed. ${err}`)
         }
     }
 }
