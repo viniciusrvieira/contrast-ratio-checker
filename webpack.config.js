@@ -3,10 +3,8 @@ module.exports = {
     mode: "production",
     output: {
         filename: "index.js",
-        library: {
-            type: "umd",
-            name: "ConstrastRatioChecker",
-        },
+        library: "ContrastRatioChecker",
+        libraryTarget: "umd",
         globalObject: "this",
     },
 }
