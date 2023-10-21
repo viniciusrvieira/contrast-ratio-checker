@@ -7,5 +7,6 @@ module.exports = {
             type: "umd",
             name: "ConstrastRatioChecker",
         },
+        globalObject: "this",
     },
 }
