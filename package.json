@@ -1,6 +1,6 @@
 {
     "name": "contrast-ratio-checker",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "A package based on WCAG 2.0 to easily check contrast ratio.",
     "scripts": {
         "example1": "ts-node examples/example1.ts",
@@ -24,7 +24,9 @@
     "homepage": "https://github.com/viniciusrvieira/contrast-ratio-checker#readme",
     "devDependencies": {
         "ts-node": "^10.9.1",
-        "typescript": "^5.2.2"
+        "typescript": "^5.2.2",
+        "webpack": "^5.89.0",
+        "webpack-cli": "^5.1.4"
     },
     "main": "dist/index.js",
     "types": "dist/index.d.ts"
