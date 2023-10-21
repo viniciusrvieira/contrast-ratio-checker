@@ -7,7 +7,5 @@ module.exports = {
             type: "umd",
             name: "ConstrastRatioChecker",
         },
-        // prevent error: `Uncaught ReferenceError: self is not define`
-        globalObject: "this",
     },
 }
